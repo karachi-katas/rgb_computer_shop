@@ -41,19 +41,17 @@ public class UserShould {
     }
 
     @Test
-    public void beAbleToListItemByCategory(){
+    public void beAbleToListItemByCategorySortedByPrice(){
 
         Item dellMouse = new Item("Dell_Mouse",1000,new Category("Mouse"));
-        Item lenovoMouse = new Item("Lenovo_Mouse",1500,new Category("Mouse"));
+        Item lenovoMouse = new Item("Lenovo_Mouse",7000,new Category("Mouse"));
         Item raserMouse = new Item("Raser_Mouse",5000,new Category("Mouse"));
-        Item dellKeyboard = new Item("Dell_Keyboard",1000,new Category("Keyboard"));
 
         Mockito.when(itemRepository.getByCategory(MOUSE)).
                 thenReturn(Arrays.asList(dellMouse,lenovoMouse,raserMouse));
 
         List<Item> items = new ItemService(itemRepository).getByCategory(MOUSE);
 
-
-        assertThat(items).containsExactly(dellMouse,lenovoMouse,raserMouse);
+        assertThat(items).containsExactly(dellMouse, raserMouse, lenovoMouse);
     }
 }
