@@ -5,10 +5,9 @@ import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class RgbComputerShopShould {
+public class CustomerShould {
 
     @Test
-    public void exist() {
-        RgbComputerShop rgbComputerShop = new RgbComputerShop();
+    public void doSomething() {
     }
 }
