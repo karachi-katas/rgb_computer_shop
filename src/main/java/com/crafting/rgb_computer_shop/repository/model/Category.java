@@ -14,12 +14,17 @@ import lombok.Setter;
 public class Category {
 
     @Id
-    private String id;
+    private Integer id;
 
     @Column(name = "name")
     private String name;
 
     public Category(String name) {
+        this.name = name;
+    }
+
+    public Category(Integer id, String name) {
+        this.id = id;
         this.name = name;
     }
 }

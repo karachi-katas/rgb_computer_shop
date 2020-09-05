@@ -14,7 +14,7 @@ import lombok.Setter;
 public class Item {
 
     @Id
-    private String id;
+    private Integer id;
 
     private String name;
 
@@ -22,4 +22,10 @@ public class Item {
 
     @ManyToOne
     private Category category;
+
+    public Item(Integer id, String name, Double price) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+    }
 }
