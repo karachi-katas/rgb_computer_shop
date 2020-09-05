@@ -7,6 +7,8 @@ import com.crafting.rgb_computer_shop.repository.model.Category;
 import com.crafting.rgb_computer_shop.services.CategoryService;
 import java.util.Arrays;
 import java.util.List;
+
+import com.crafting.rgb_computer_shop.services.ItemService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -31,5 +33,14 @@ public class UserShould {
         List<String> categories = new CategoryService(categoryRepository).getAll();
 
         assertThat(categories).containsExactly("Mouse", "Keyboard", "Monitor");
+    }
+
+    @Test
+    public void beAbleToGetSortedListOfItemsByCategory(){
+
+        List<String> list = new ItemService().getItemsByCategory("Mouse");
+
+        assertThat(list).containsExactly("logitek", "microsoft", "lenovo");
+
     }
 }
