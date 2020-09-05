@@ -38,6 +38,16 @@ public class UserShould {
     public void beAbleToListItemsInACategory(){
         String category = "Mouse";
         List<Item> items = new CategoryService(categoryRepository).getItemsBy(category);
+
+        assertThat(items).containsExactly();
+    }
+
+    private Item AnItem(){
+        Item item = new Item();
+        item.setName("Keyboard");
+        item.setPrice(120.0);
+        item.setCategory(new Category("Keyboard"));
+        return item;
     }
 
 }
