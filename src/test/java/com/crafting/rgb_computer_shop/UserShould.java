@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.crafting.rgb_computer_shop.repository.CategoryRepository;
 import com.crafting.rgb_computer_shop.repository.model.Category;
+import com.crafting.rgb_computer_shop.repository.model.Item;
 import com.crafting.rgb_computer_shop.services.CategoryService;
 import java.util.Arrays;
 import java.util.List;
@@ -32,4 +33,11 @@ public class UserShould {
 
         assertThat(categories).containsExactly("Mouse", "Keyboard", "Monitor");
     }
+
+    @Test
+    public void beAbleToListItemsInACategory(){
+        String category = "Mouse";
+        List<Item> items = new CategoryService(categoryRepository).getItemsBy(category);
+    }
+
 }

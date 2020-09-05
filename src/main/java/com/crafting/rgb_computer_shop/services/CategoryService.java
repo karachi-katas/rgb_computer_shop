@@ -4,6 +4,8 @@ import com.crafting.rgb_computer_shop.repository.CategoryRepository;
 import com.crafting.rgb_computer_shop.repository.model.Category;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import com.crafting.rgb_computer_shop.repository.model.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class CategoryService {
@@ -24,5 +26,9 @@ public class CategoryService {
                 .collect(Collectors.toList());
 
         return categoryNames;
+    }
+
+    public List<Item> getItemsBy(String category) {
+        return null;
     }
 }
