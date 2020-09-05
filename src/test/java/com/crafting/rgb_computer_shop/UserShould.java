@@ -56,4 +56,20 @@ public class UserShould {
 
         assertThat(sortedItems).containsExactly("Mouse", "Monitor", "Keyboard");
     }
+
+    @Test
+    public void tobeAbleToGetSortedItemsByCategory() {
+
+        Mockito.when(itemRepository.findAll())
+                .thenReturn(Arrays.asList(
+                        new Item("Monitor", 99.0, new Category("PC Items")),
+                        new Item("Keyboard", 200.0, new Category("PC Items")),
+                        new Item("Mouse", 50.0, new Category("PC Items")),
+                        new Item("PS4", 50.0, new Category("Console"))
+                ));
+
+        List<String> sortedItems = new ItemsService(itemRepository).getSortedItemsByPriceInCategory("PC Items");
+
+        assertThat(sortedItems).containsExactly("Mouse", "Monitor", "Keyboard");
+    }
 }

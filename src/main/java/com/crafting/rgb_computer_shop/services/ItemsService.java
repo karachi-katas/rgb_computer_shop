@@ -20,4 +20,17 @@ public class ItemsService {
         return items.stream().map(Item::getName).collect(Collectors.toList());
 
     }
+
+    public List<String> getSortedItemsByPriceInCategory(String category) {
+
+        List<Item> items = itemRepository.findAll().stream()
+                .filter(it -> it.getCategory().getName().equals(category))
+                .sorted(Comparator.comparing(Item::getPrice))
+                .collect(Collectors.toList());
+
+        return items.stream()
+                .map(Item::getName)
+                .collect(Collectors.toList());
+
+    }
 }
