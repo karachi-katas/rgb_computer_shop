@@ -1,16 +1,20 @@
 package com.crafting.rgb_computer_shop;
 
+import static com.crafting.rgb_computer_shop.Fixtures.DELL_MOUSE;
+import static com.crafting.rgb_computer_shop.Fixtures.KEYBOARD;
+import static com.crafting.rgb_computer_shop.Fixtures.LENOVO_MOUSE;
+import static com.crafting.rgb_computer_shop.Fixtures.MONITOR;
+import static com.crafting.rgb_computer_shop.Fixtures.MOUSE;
+import static com.crafting.rgb_computer_shop.Fixtures.RASER_MOUSE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.crafting.rgb_computer_shop.repository.CategoryRepository;
 import com.crafting.rgb_computer_shop.repository.ItemRepository;
-import com.crafting.rgb_computer_shop.repository.model.Category;
 import com.crafting.rgb_computer_shop.repository.model.Item;
 import com.crafting.rgb_computer_shop.services.CategoryService;
+import com.crafting.rgb_computer_shop.services.ItemService;
 import java.util.Arrays;
 import java.util.List;
-
-import com.crafting.rgb_computer_shop.services.ItemService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -20,9 +24,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class UserShould {
 
-    public static final Category MOUSE = new Category("Mouse");
     @Mock
     CategoryRepository categoryRepository;
+
     @Mock
     ItemRepository itemRepository;
 
@@ -30,10 +34,7 @@ public class UserShould {
     public void beAbleToListAllCategories() {
 
         Mockito.when(categoryRepository.findAll())
-                .thenReturn(Arrays.asList(
-                        new Category("Mouse"),
-                        new Category("Keyboard"),
-                        new Category("Monitor")));
+                .thenReturn(Arrays.asList(MOUSE, KEYBOARD, MONITOR));
 
         List<String> categories = new CategoryService(categoryRepository).getAll();
 
@@ -41,17 +42,15 @@ public class UserShould {
     }
 
     @Test
-    public void beAbleToListItemByCategorySortedByPrice(){
-
-        Item dellMouse = new Item("Dell_Mouse",1000,new Category("Mouse"));
-        Item lenovoMouse = new Item("Lenovo_Mouse",7000,new Category("Mouse"));
-        Item raserMouse = new Item("Raser_Mouse",5000,new Category("Mouse"));
+    public void beAbleToListItemByCategorySortedByPrice() {
 
         Mockito.when(itemRepository.getByCategory(MOUSE)).
-                thenReturn(Arrays.asList(dellMouse,lenovoMouse,raserMouse));
+                thenReturn(Arrays.asList(
+                        DELL_MOUSE, LENOVO_MOUSE, RASER_MOUSE));
 
         List<Item> items = new ItemService(itemRepository).getByCategory(MOUSE);
 
-        assertThat(items).containsExactly(dellMouse, raserMouse, lenovoMouse);
+        assertThat(items).containsExactly(
+                DELL_MOUSE, RASER_MOUSE, LENOVO_MOUSE);
     }
 }
