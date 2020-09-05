@@ -50,17 +50,39 @@ public class UserShould {
 
         List<Item> items = new ItemService(itemRepository).getItemsBy(category);
 
-        assertThat(items).contains(
+        assertThat(items).containsExactlyInAnyOrder(
             AnItem("Expensive rgb keyboard"),
             AnItem("Simple lab keyboard"));
     }
 
+    @Test
+    public void beAbleToListItemsSortedByPriceInACategory(){
+        String category = "Keyboard";
+        Mockito.when(itemRepository.findAllByCategory_Name(category))
+                .thenReturn(Arrays.asList(
+                        AnItem("Expensive rgb keyboard", 120.0),
+                        AnItem("Simple lab keyboard", 150.0),
+                        AnItem("Cheap lab keyboard", 50.0)
+                ));
+
+        List<Item> items = new ItemService(itemRepository).getSortedItemsBy(category);
+
+        assertThat(items).containsExactly(
+                AnItem("Cheap lab keyboard", 50.0),
+                AnItem("Expensive rgb keyboard", 120.0),
+                AnItem("Simple lab keyboard", 150.0)
+        );
+    }
+
     private Item AnItem(String itemName){
+        return AnItem(itemName, 120.0);
+    }
+
+    private Item AnItem(String itemName, Double price){
         Item item = new Item();
         item.setName(itemName);
-        item.setPrice(120.0);
+        item.setPrice(price);
         item.setCategory(new Category("Keyboard"));
         return item;
     }
-
 }

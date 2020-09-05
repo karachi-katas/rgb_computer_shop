@@ -13,7 +13,7 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode
 @Table(name = "item")
-public class Item {
+public class Item implements Comparable<Item> {
 
     @Id
     private String id;
@@ -24,4 +24,10 @@ public class Item {
 
     @ManyToOne
     private Category category;
+
+    public int compareTo(Item item) {
+        if (this.price > item.price)
+            return 1;
+        return -1;
+    }
 }
