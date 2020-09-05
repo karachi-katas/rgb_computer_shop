@@ -1,13 +1,19 @@
 package com.crafting.rgb_computer_shop;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
 
+import com.crafting.rgb_computer_shop.repository.CartRepository;
 import com.crafting.rgb_computer_shop.repository.CategoryRepository;
 import com.crafting.rgb_computer_shop.repository.ItemRepository;
+import com.crafting.rgb_computer_shop.repository.model.Cart;
 import com.crafting.rgb_computer_shop.repository.model.Category;
 import com.crafting.rgb_computer_shop.repository.model.Item;
+import com.crafting.rgb_computer_shop.services.CartService;
 import com.crafting.rgb_computer_shop.services.CategoryService;
 import com.crafting.rgb_computer_shop.services.ItemService;
+
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.Test;
@@ -24,6 +30,9 @@ public class UserShould {
 
     @Mock
     ItemRepository itemRepository;
+
+    @Mock
+    CartRepository cartRepository;
 
     @Test
     public void beAbleToListAllCategories() {
@@ -84,5 +93,18 @@ public class UserShould {
         item.setPrice(price);
         item.setCategory(new Category("Keyboard"));
         return item;
+    }
+
+    @Test
+    public void beAbleToAddItemsToACart(){
+        int cartID=1; int itemID=1;
+        CartService cartService = new CartService(cartRepository, itemRepository);
+        cartService.addItem(cartID, itemID);
+
+        Cart cart = new Cart();
+        cart.setId(cartID);
+        cart.setItems(Arrays.asList(AnItem("Simple lab keyboard", 150.0)));
+        verify(cartRepository).save(cart);
+
     }
 }
