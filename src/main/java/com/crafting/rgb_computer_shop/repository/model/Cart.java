@@ -1,5 +1,7 @@
 package com.crafting.rgb_computer_shop.repository.model;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -26,6 +28,14 @@ public class Cart {
         inverseJoinColumns = @JoinColumn(name = "item_id"))
     private List<Item> items;
 
+    public Cart() {
+        items = new ArrayList<>();
+    }
+
     private Integer status;
+
+    public void addItem(Item item) {
+        items.add(item);
+    }
 
 }

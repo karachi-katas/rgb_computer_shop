@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.crafting.rgb_computer_shop.repository.CategoryRepository;
 import com.crafting.rgb_computer_shop.repository.ItemRepository;
+import com.crafting.rgb_computer_shop.repository.model.Cart;
 import com.crafting.rgb_computer_shop.repository.model.Category;
 import com.crafting.rgb_computer_shop.repository.model.Item;
 import com.crafting.rgb_computer_shop.services.CategoryService;
@@ -43,7 +44,7 @@ public class UserShould {
     }
 
     @Test
-    public void tobeAbleToGetSortedItems() {
+    public void beAbleToGetSortedItems() {
 
         Mockito.when(itemRepository.findAll())
                 .thenReturn(Arrays.asList(
@@ -58,7 +59,7 @@ public class UserShould {
     }
 
     @Test
-    public void tobeAbleToGetSortedItemsByCategory() {
+    public void beAbleToGetSortedItemsByCategory() {
 
         Mockito.when(itemRepository.findAll())
                 .thenReturn(Arrays.asList(
@@ -71,5 +72,31 @@ public class UserShould {
         List<String> sortedItems = new ItemsService(itemRepository).getSortedItemsByPriceInCategory("PC Items");
 
         assertThat(sortedItems).containsExactly("Mouse", "Monitor", "Keyboard");
+    }
+
+    @Test
+    public void beAbleToAddAnItemToTheCart(){
+
+        Cart cart = new Cart();
+        Item testItem = new Item("Monitor", 99.0, new Category("PC Items"));
+        cart.addItem(testItem);
+
+        List<Item> itemsInCart = cart.getItems();
+
+        assertThat(itemsInCart).containsOnly(testItem);
+    }
+
+    @Test
+    public void beAbleToAddItemsToTheCart(){
+
+        Cart cart = new Cart();
+        Item testItem = new Item("Monitor", 99.0, new Category("PC Items"));
+        Item testItem2 = new Item("Keyboard", 55.0, new Category("PC Items"));
+        cart.addItem(testItem);
+        cart.addItem(testItem2);
+
+        List<Item> itemsInCart = cart.getItems();
+
+        assertThat(itemsInCart).containsExactly(testItem, testItem2);
     }
 }
