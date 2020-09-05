@@ -11,8 +11,7 @@
 	<groupId>com.crafting</groupId>
 	<artifactId>rgb_computer_shop</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>our_twitter</name>
-	<description>Communist project for Spring Boot</description>
+	<name>rgb_computer_shop</name>
 
 	<properties>
 		<maven.compiler.target>1.8</maven.compiler.target>
