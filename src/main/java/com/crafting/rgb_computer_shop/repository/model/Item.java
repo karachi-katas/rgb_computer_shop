@@ -22,4 +22,9 @@ public class Item {
 
     @ManyToOne
     private Category category;
+
+    public Item(String name, Double price) {
+        this.name = name;
+        this.price = price;
+    }
 }
