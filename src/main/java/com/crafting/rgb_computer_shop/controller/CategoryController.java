@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController(value = "/")
 public class CategoryController {
-
+    
     @GetMapping(value = "hello")
     public String hello() {
         return "RGB Tomcat";
