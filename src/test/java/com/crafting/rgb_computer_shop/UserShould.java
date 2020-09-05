@@ -3,9 +3,11 @@ package com.crafting.rgb_computer_shop;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.crafting.rgb_computer_shop.repository.CategoryRepository;
+import com.crafting.rgb_computer_shop.repository.ItemRepository;
 import com.crafting.rgb_computer_shop.repository.model.Category;
 import com.crafting.rgb_computer_shop.repository.model.Item;
 import com.crafting.rgb_computer_shop.services.CategoryService;
+import com.crafting.rgb_computer_shop.services.ItemService;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.Test;
@@ -19,6 +21,9 @@ public class UserShould {
 
     @Mock
     CategoryRepository categoryRepository;
+
+    @Mock
+    ItemRepository itemRepository;
 
     @Test
     public void beAbleToListAllCategories() {
@@ -36,15 +41,23 @@ public class UserShould {
 
     @Test
     public void beAbleToListItemsInACategory(){
-        String category = "Mouse";
-        List<Item> items = new CategoryService(categoryRepository).getItemsBy(category);
+        String category = "Keyboard";
+        Mockito.when(itemRepository.findAllByCategory_Name(category))
+            .thenReturn(Arrays.asList(
+                AnItem("Expensive rgb keyboard"),
+                AnItem("Simple lab keyboard")
+            ));
 
-        assertThat(items).containsExactly();
+        List<Item> items = new ItemService(itemRepository).getItemsBy(category);
+
+        assertThat(items).contains(
+            AnItem("Expensive rgb keyboard"),
+            AnItem("Simple lab keyboard"));
     }
 
-    private Item AnItem(){
+    private Item AnItem(String itemName){
         Item item = new Item();
-        item.setName("Keyboard");
+        item.setName(itemName);
         item.setPrice(120.0);
         item.setCategory(new Category("Keyboard"));
         return item;
