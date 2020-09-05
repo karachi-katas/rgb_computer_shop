@@ -35,12 +35,28 @@ public class UserShould {
         assertThat(categories).containsExactly("Mouse", "Keyboard", "Monitor");
     }
 
+//    @Test
+//    public void beAbleToGetSortedListOfItemsByCategory(){
+//
+//        List<String> list = new ItemService().getItemsByCategory("Mouse");
+//
+//        assertThat(list).containsExactly("logitek", "microsoft", "lenovo");
+//
+//    }
+
     @Test
-    public void beAbleToGetSortedListOfItemsByCategory(){
+    public void beAbleToGetCategoryByName() {
 
-        List<String> list = new ItemService().getItemsByCategory("Mouse");
+        Category expected = new Category("Mouse");
 
-        assertThat(list).containsExactly("logitek", "microsoft", "lenovo");
+        Mockito.when(categoryRepository.findByName("Mouse"))
+                .thenReturn(expected);
+
+        Category actualCategory = new CategoryService(categoryRepository).getByName("Mouse");
+
+        assertThat(actualCategory).isEqualTo(expected);
 
     }
+
+
 }
