@@ -8,9 +8,12 @@ import static com.crafting.rgb_computer_shop.Fixtures.MOUSE;
 import static com.crafting.rgb_computer_shop.Fixtures.RASER_MOUSE;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.crafting.rgb_computer_shop.repository.CartRepository;
 import com.crafting.rgb_computer_shop.repository.CategoryRepository;
 import com.crafting.rgb_computer_shop.repository.ItemRepository;
+import com.crafting.rgb_computer_shop.repository.model.Cart;
 import com.crafting.rgb_computer_shop.repository.model.Item;
+import com.crafting.rgb_computer_shop.services.CartService;
 import com.crafting.rgb_computer_shop.services.CategoryService;
 import com.crafting.rgb_computer_shop.services.ItemService;
 import java.util.Arrays;
@@ -29,6 +32,9 @@ public class UserShould {
 
     @Mock
     ItemRepository itemRepository;
+
+    @Mock
+    CartRepository cartRepository;
 
     @Test
     public void beAbleToListAllCategories() {
@@ -52,5 +58,20 @@ public class UserShould {
 
         assertThat(items).containsExactly(
                 DELL_MOUSE, RASER_MOUSE, LENOVO_MOUSE);
+    }
+
+
+    //QUESTION :
+    @Test
+    public void beAbleToAddItemsToCart(){
+
+        Mockito.when(cartRepository.addItems(Arrays.asList(
+                DELL_MOUSE, LENOVO_MOUSE, RASER_MOUSE))).
+                thenReturn(Arrays.asList(
+                DELL_MOUSE, LENOVO_MOUSE, RASER_MOUSE));
+
+        List<Item> itemList = new CartService(cartRepository).addItems(Arrays.asList(
+                DELL_MOUSE, LENOVO_MOUSE, RASER_MOUSE));
+        assertThat(itemList).containsExactly(DELL_MOUSE, LENOVO_MOUSE, RASER_MOUSE);
     }
 }
